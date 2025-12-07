@@ -1,8 +1,11 @@
-
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import hpp from 'hpp';
+import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
+// @ts-ignore
+import xss from 'xss-clean';
 import { connectDB } from './config/database';
 import authRoutes from './routes/authRoutes';
 import classRoutes from './routes/classRoutes';
@@ -15,35 +18,67 @@ dotenv.config();
 const app = express();
 const PORT = Number(process.env.PORT) || 10000;
 
-// Security & CORS Configuration
-app.use(helmet() as unknown as express.RequestHandler);
+// ================= SECURITY MIDDLEWARE =================
+
+// 1. Set Security Headers
+app.use(helmet());
+
+// 2. Prevent Parameter Pollution
+app.use(hpp());
+
+// 3. Data Sanitization against XSS
+app.use(xss() as any);
+
+// 4. Rate Limiting (General)
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 10 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs
+  message: { success: false, message: 'Too many requests, please try again later.' }
+});
+app.use('/api', limiter);
+
+// 5. CORS Configuration
 app.use(cors({
   origin: [
     'https://app.nerdznj.ir', 
     'http://app.nerdznj.ir',
+    'http://82.115.21.155', // Your Server IP
     'http://localhost:10001',
-    'http://localhost:5173' // For local dev
+    'http://localhost:5173'
   ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 }));
-app.use(express.json());
 
-// Routes
+app.use(express.json({ limit: '10kb' })); // Limit body size
+
+// ================= ROUTES =================
+
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/classes', classRoutes);
-app.use('/api/v1/training', trainingRoutes); // AI Training Plans
-app.use('/api/v1/social', socialRoutes);     // Social Feed
+app.use('/api/v1/training', trainingRoutes);
+app.use('/api/v1/social', socialRoutes);
 
 // Health Check
 app.get('/api/health', (req, res) => {
-  res.json({ success: true, message: 'SmartFitHub Core System Operational' });
+  res.json({ 
+    success: true, 
+    message: 'SmartFitHub Core System Operational',
+    timestamp: new Date().toISOString()
+  });
+});
+
+// 404 Handler
+app.use('*', (req, res) => {
+  res.status(404).json({ success: false, message: 'Endpoint not found' });
 });
 
 // Start Server
 const start = async () => {
   await connectDB();
   app.listen(PORT, '0.0.0.0', () => {
-    console.log(`🚀 SmartFitHub Server running on port ${PORT}`);
+    console.log(`🚀 SmartFitHub Secure Server running on port ${PORT}`);
   });
 };
 

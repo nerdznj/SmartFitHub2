@@ -1,16 +1,14 @@
-
-import OpenAI from 'openai';
+import { GoogleGenAI } from '@google/genai';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const generateWorkoutPlan = async (userProfile: any) => {
+  // Using smart algorithms to generate plan
   const prompt = `
-    Create a personalized weekly workout plan (JSON format) for a user with the following stats:
+    Create a personalized weekly workout plan (JSON format) based on:
     - Gender: ${userProfile.gender}
     - Age: ${userProfile.age}
     - Weight: ${userProfile.weight}kg
@@ -18,20 +16,22 @@ export const generateWorkoutPlan = async (userProfile: any) => {
     - Body Type: ${userProfile.bodyType}
     - Goal: ${userProfile.fitnessGoal}
     
-    The plan should include exercises, sets, reps, and nutrition advice.
-    Format: { "monday": [...], "tuesday": [...], ..., "nutrition": "..." }
-    Ensure the tone is professional and motivating.
+    Structure: { "monday": [...], "tuesday": [...], ..., "nutrition": "..." }
   `;
 
   try {
-    const completion = await openai.chat.completions.create({
-      messages: [{ role: "system", content: "You are an expert elite fitness trainer." }, { role: "user", content: prompt }],
-      model: "gpt-4o-mini",
+    const response = await ai.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: prompt,
+      config: {
+        systemInstruction: "Expert fitness algorithm.",
+        responseMimeType: 'application/json'
+      }
     });
 
-    return completion.choices[0].message.content;
+    return response.text;
   } catch (error) {
-    console.error("Service Error:", error);
-    throw new Error("Failed to generate training plan.");
+    console.error("Plan Generation Error:", error);
+    throw new Error("Unable to generate plan at this time.");
   }
 };
