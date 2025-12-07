@@ -1,17 +1,17 @@
 
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from 'sequelize';
 import { sequelize } from '../config/database';
 import { User } from './User';
 
-export class Class extends Model {
-  public id!: number;
-  public name!: string;
-  public trainerId!: string;
-  public capacity!: number;
-  public date!: string;
-  public startTime!: string;
-  public price!: number;
-  public type!: string;
+export class Class extends Model<InferAttributes<Class>, InferCreationAttributes<Class>> {
+  declare id: CreationOptional<number>;
+  declare name: string;
+  declare trainerId: string;
+  declare capacity: number;
+  declare date: string;
+  declare startTime: string;
+  declare price: CreationOptional<number>;
+  declare type: string | null;
 }
 
 Class.init({

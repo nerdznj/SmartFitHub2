@@ -1,7 +1,10 @@
 import { motion, HTMLMotionProps } from 'framer-motion';
+import { ReactNode } from 'react';
 
 interface Props extends HTMLMotionProps<"button"> {
   variant?: 'cyan' | 'green' | 'orange';
+  children?: ReactNode;
+  className?: string;
 }
 
 export const NeonButton = ({ children, variant = 'cyan', className = '', ...props }: Props) => {

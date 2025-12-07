@@ -1,14 +1,14 @@
 
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from 'sequelize';
 import { sequelize } from '../config/database';
 import { User } from './User';
 import { Class } from './Class';
 
-export class Booking extends Model {
-  public id!: string;
-  public userId!: string;
-  public classId!: number;
-  public status!: 'confirmed' | 'cancelled';
+export class Booking extends Model<InferAttributes<Booking>, InferCreationAttributes<Booking>> {
+  declare id: CreationOptional<string>;
+  declare userId: string;
+  declare classId: number;
+  declare status: CreationOptional<'confirmed' | 'cancelled'>;
 }
 
 Booking.init({

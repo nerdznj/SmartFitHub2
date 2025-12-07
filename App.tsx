@@ -1,6 +1,7 @@
 
 import React, { useState, useRef, useMemo, Suspense } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { ThreeElements } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera, Stars, Float, Text, Line, useCursor, MeshDistortMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -18,6 +19,13 @@ import {
   Cpu,
   ShieldCheck
 } from 'lucide-react';
+
+// Fix for JSX.IntrinsicElements in @react-three/fiber
+declare global {
+  namespace JSX {
+    interface IntrinsicElements extends ThreeElements {}
+  }
+}
 
 // --- STORE ---
 type AppView = 'AUTH' | 'PROFILE' | 'DASHBOARD' | 'CLASSES' | 'WALLET' | 'SOCIAL';

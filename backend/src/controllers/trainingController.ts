@@ -4,7 +4,7 @@ import { AuthRequest } from '../middleware/auth';
 import { UserProfile, TrainingPlan } from '../models';
 import { generateWorkoutPlan } from '../services/aiService';
 
-export const createAiPlan = async (req: AuthRequest, res: Response) => {
+export const createAiPlan = async (req: any, res: any) => {
   try {
     const userId = req.user!.id;
     const profile = await UserProfile.findOne({ where: { userId } });
@@ -13,14 +13,12 @@ export const createAiPlan = async (req: AuthRequest, res: Response) => {
       return res.status(400).json({ success: false, message: 'پروفایل فیزیکی ناقص است.' });
     }
 
-    // Call AI Service
-    const aiResponse = await generateWorkoutPlan(profile);
+    const generatedContent = await generateWorkoutPlan(profile);
 
-    // Save Plan
     const plan = await TrainingPlan.create({
       userId,
       goal: profile.fitnessGoal,
-      content: aiResponse || '{}',
+      content: generatedContent || '{}',
       status: 'active'
     });
 
@@ -30,7 +28,7 @@ export const createAiPlan = async (req: AuthRequest, res: Response) => {
   }
 };
 
-export const getMyPlan = async (req: AuthRequest, res: Response) => {
+export const getMyPlan = async (req: any, res: any) => {
   try {
     const plan = await TrainingPlan.findOne({ 
       where: { userId: req.user!.id, status: 'active' },

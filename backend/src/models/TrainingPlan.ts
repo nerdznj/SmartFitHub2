@@ -1,14 +1,14 @@
 
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from 'sequelize';
 import { sequelize } from '../config/database';
 import { User } from './User';
 
-export class TrainingPlan extends Model {
-  public id!: string;
-  public userId!: string;
-  public goal!: string;
-  public content!: string; // JSON string of the plan
-  public status!: 'active' | 'completed' | 'archived';
+export class TrainingPlan extends Model<InferAttributes<TrainingPlan>, InferCreationAttributes<TrainingPlan>> {
+  declare id: CreationOptional<string>;
+  declare userId: string;
+  declare goal: string;
+  declare content: string;
+  declare status: CreationOptional<'active' | 'completed' | 'archived'>;
 }
 
 TrainingPlan.init({
@@ -27,7 +27,7 @@ TrainingPlan.init({
     allowNull: false
   },
   content: {
-    type: DataTypes.TEXT, // Storing large JSON response from AI
+    type: DataTypes.TEXT,
     allowNull: false
   },
   status: {

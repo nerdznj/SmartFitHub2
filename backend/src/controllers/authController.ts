@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 import { User, Wallet, UserProfile } from '../models';
 import { sequelize } from '../config/database';
 
-export const register = async (req: Request, res: Response) => {
+export const register = async (req: any, res: any) => {
   const t = await sequelize.transaction();
   try {
     const { phone, password, fullName, email, ...profileData } = req.body;
@@ -52,7 +52,7 @@ export const register = async (req: Request, res: Response) => {
   }
 };
 
-export const login = async (req: Request, res: Response) => {
+export const login = async (req: any, res: any) => {
   try {
     const { identifier, password } = req.body;
     

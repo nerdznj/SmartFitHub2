@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { AuthRequest } from '../middleware/auth';
 import { SocialPost, User, UserProfile } from '../models';
 
-export const getFeed = async (req: AuthRequest, res: Response) => {
+export const getFeed = async (req: any, res: any) => {
   try {
     const posts = await SocialPost.findAll({
       include: [{ 
@@ -20,7 +20,7 @@ export const getFeed = async (req: AuthRequest, res: Response) => {
   }
 };
 
-export const createPost = async (req: AuthRequest, res: Response) => {
+export const createPost = async (req: any, res: any) => {
   try {
     const { content, imageUrl } = req.body;
     const post = await SocialPost.create({

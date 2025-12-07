@@ -1,17 +1,17 @@
 
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from 'sequelize';
 import { sequelize } from '../config/database';
 import { User } from './User';
 
-export class UserProfile extends Model {
-  public id!: string;
-  public userId!: string;
-  public weight!: number;
-  public height!: number;
-  public age!: number;
-  public gender!: 'male' | 'female';
-  public bodyType!: 'ectomorph' | 'mesomorph' | 'endomorph';
-  public fitnessGoal!: string;
+export class UserProfile extends Model<InferAttributes<UserProfile>, InferCreationAttributes<UserProfile>> {
+  declare id: CreationOptional<string>;
+  declare userId: string;
+  declare weight: number | null;
+  declare height: number | null;
+  declare age: number | null;
+  declare gender: 'male' | 'female' | null;
+  declare bodyType: 'ectomorph' | 'mesomorph' | 'endomorph' | null;
+  declare fitnessGoal: string | null;
 }
 
 UserProfile.init({

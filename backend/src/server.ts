@@ -13,12 +13,17 @@ import './models/index';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 10000;
+const PORT = Number(process.env.PORT) || 10000;
 
 // Security & CORS Configuration
-app.use(helmet());
+app.use(helmet() as unknown as express.RequestHandler);
 app.use(cors({
-  origin: 'http://localhost:10001', // Allow Frontend on port 10001
+  origin: [
+    'https://app.nerdznj.ir', 
+    'http://app.nerdznj.ir',
+    'http://localhost:10001',
+    'http://localhost:5173' // For local dev
+  ],
   credentials: true
 }));
 app.use(express.json());
@@ -37,7 +42,7 @@ app.get('/api/health', (req, res) => {
 // Start Server
 const start = async () => {
   await connectDB();
-  app.listen(PORT, () => {
+  app.listen(PORT, '0.0.0.0', () => {
     console.log(`🚀 SmartFitHub Server running on port ${PORT}`);
   });
 };

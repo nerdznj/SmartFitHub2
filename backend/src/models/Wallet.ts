@@ -1,13 +1,13 @@
 
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from 'sequelize';
 import { sequelize } from '../config/database';
 import { User } from './User';
 
-export class Wallet extends Model {
-  public id!: string;
-  public userId!: string;
-  public balance!: number;
-  public currency!: string;
+export class Wallet extends Model<InferAttributes<Wallet>, InferCreationAttributes<Wallet>> {
+  declare id: CreationOptional<string>;
+  declare userId: string;
+  declare balance: CreationOptional<number>;
+  declare currency: CreationOptional<string>;
 }
 
 Wallet.init({

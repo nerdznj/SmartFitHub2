@@ -1,15 +1,15 @@
 
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from 'sequelize';
 import { sequelize } from '../config/database';
 
-export class User extends Model {
-  public id!: string;
-  public phone!: string;
-  public email!: string;
-  public password!: string;
-  public fullName!: string;
-  public role!: 'user' | 'trainer' | 'admin';
-  public isActive!: boolean;
+export class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
+  declare id: CreationOptional<string>;
+  declare phone: string;
+  declare email: string | null;
+  declare password: string;
+  declare fullName: string;
+  declare role: CreationOptional<'user' | 'trainer' | 'admin'>;
+  declare isActive: CreationOptional<boolean>;
 }
 
 User.init({

@@ -20,17 +20,18 @@ export const generateWorkoutPlan = async (userProfile: any) => {
     
     The plan should include exercises, sets, reps, and nutrition advice.
     Format: { "monday": [...], "tuesday": [...], ..., "nutrition": "..." }
+    Ensure the tone is professional and motivating.
   `;
 
   try {
     const completion = await openai.chat.completions.create({
-      messages: [{ role: "system", content: "You are an expert fitness trainer." }, { role: "user", content: prompt }],
-      model: "gpt-3.5-turbo",
+      messages: [{ role: "system", content: "You are an expert elite fitness trainer." }, { role: "user", content: prompt }],
+      model: "gpt-4o-mini",
     });
 
     return completion.choices[0].message.content;
   } catch (error) {
-    console.error("AI Service Error:", error);
+    console.error("Service Error:", error);
     throw new Error("Failed to generate training plan.");
   }
 };

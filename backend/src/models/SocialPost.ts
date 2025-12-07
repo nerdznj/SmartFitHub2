@@ -1,14 +1,14 @@
 
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from 'sequelize';
 import { sequelize } from '../config/database';
 import { User } from './User';
 
-export class SocialPost extends Model {
-  public id!: string;
-  public userId!: string;
-  public content!: string;
-  public imageUrl!: string;
-  public likes!: number;
+export class SocialPost extends Model<InferAttributes<SocialPost>, InferCreationAttributes<SocialPost>> {
+  declare id: CreationOptional<string>;
+  declare userId: string;
+  declare content: string;
+  declare imageUrl: string | null;
+  declare likes: CreationOptional<number>;
 }
 
 SocialPost.init({

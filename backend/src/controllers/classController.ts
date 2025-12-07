@@ -4,7 +4,7 @@ import { Class, Booking, User, Wallet } from '../models';
 import { AuthRequest } from '../middleware/auth';
 import { sequelize } from '../config/database';
 
-export const getClasses = async (req: Request, res: Response) => {
+export const getClasses = async (req: any, res: any) => {
   try {
     const classes = await Class.findAll({
       include: [{ model: User, as: 'trainer', attributes: ['id', 'fullName'] }]
@@ -15,7 +15,7 @@ export const getClasses = async (req: Request, res: Response) => {
   }
 };
 
-export const bookClass = async (req: AuthRequest, res: Response) => {
+export const bookClass = async (req: any, res: any) => {
   const t = await sequelize.transaction();
   try {
     const userId = req.user!.id;
