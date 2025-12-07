@@ -1,0 +1,45 @@
+
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import dotenv from 'dotenv';
+import { connectDB } from './config/database';
+import authRoutes from './routes/authRoutes';
+import classRoutes from './routes/classRoutes';
+import trainingRoutes from './routes/trainingRoutes';
+import socialRoutes from './routes/socialRoutes';
+import './models/index'; 
+
+dotenv.config();
+
+const app = express();
+const PORT = process.env.PORT || 10000;
+
+// Security & CORS Configuration
+app.use(helmet());
+app.use(cors({
+  origin: 'http://localhost:10001', // Allow Frontend on port 10001
+  credentials: true
+}));
+app.use(express.json());
+
+// Routes
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/classes', classRoutes);
+app.use('/api/v1/training', trainingRoutes); // AI Training Plans
+app.use('/api/v1/social', socialRoutes);     // Social Feed
+
+// Health Check
+app.get('/api/health', (req, res) => {
+  res.json({ success: true, message: 'SmartFitHub Core System Operational' });
+});
+
+// Start Server
+const start = async () => {
+  await connectDB();
+  app.listen(PORT, () => {
+    console.log(`🚀 SmartFitHub Server running on port ${PORT}`);
+  });
+};
+
+start();
