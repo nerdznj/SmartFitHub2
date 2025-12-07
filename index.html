@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SmartGym | The Future of Fitness</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --color-void: #050505;
+        --color-neon-cyan: #00f3ff;
+        --color-neon-green: #00ff41;
+        --color-neon-orange: #ff9e00;
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --glass-bg: rgba(10, 10, 10, 0.6);
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: var(--color-void);
+        color: #fff;
+        font-family: 'Rajdhani', sans-serif;
+        overflow: hidden; /* App feels like a native interface */
+      }
+      * {
+        box-sizing: border-box;
+      }
+      h1, h2, h3, .brand-font {
+        font-family: 'Orbitron', sans-serif;
+        letter-spacing: 2px;
+      }
+      /* Custom Scrollbar for the HUD */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #000;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--color-neon-cyan);
+        border-radius: 3px;
+      }
+      
+      .neon-text-cyan {
+        color: var(--color-neon-cyan);
+        text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+      }
+      
+      .glass-panel {
+        background: var(--glass-bg);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--glass-border);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      input, select, button {
+        outline: none;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.1/",
+    "react": "https://aistudiocdn.com/react@^19.2.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
+    "@react-three/fiber": "https://aistudiocdn.com/@react-three/fiber@^9.4.2",
+    "@react-three/drei": "https://aistudiocdn.com/@react-three/drei@^10.7.7",
+    "three": "https://aistudiocdn.com/three@^0.181.2",
+    "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.25",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.556.0",
+    "zustand": "https://aistudiocdn.com/zustand@^5.0.9",
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.10.1"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

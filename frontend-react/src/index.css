@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background-color: #050505;
+  color: #ffffff;
+  font-family: 'Rajdhani', sans-serif;
+  overflow: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #000;
+}
+::-webkit-scrollbar-thumb {
+  background: #00f3ff;
+  border-radius: 3px;
+}
+
+.glass-panel {
+  @apply bg-glass-gradient backdrop-blur-xl border border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.5)];
+}
+
+.input-neon {
+  @apply w-full bg-black/50 border border-white/20 text-white p-3 rounded font-mono focus:border-neon-cyan focus:ring-1 focus:ring-neon-cyan transition-all outline-none placeholder-gray-600;
+}
+
+canvas {
+  touch-action: none;
+}
